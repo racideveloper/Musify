@@ -1,0 +1,19 @@
+<nav class="pagination" role="navigation" aria-label="Pagination navigation">
+  <p class="body-medium">
+    Página <%=`${locals.page} de ${Math.ceil(locals.total  / locals.limit)}`%>
+  </p>
+
+  <div class="btn-wrapper">
+    <a href="<%=`${locals.baseUrl}/page/${Number(locals.page) - 1}`%>" class="icon-btn" <%=!locals.previous ? 'disabled' : ''%> data-ripple>
+      <span class="material-symbols-rounded">chevron_left</span>
+
+      <div class="state-layer"></div>
+    </a>
+
+    <a href="<%=`${locals.baseUrl}/page/${Number(locals.page) + 1}`%>" class="icon-btn" <%=!locals.next ? 'disabled' : ''%> data-ripple>
+      <span class="material-symbols-rounded">chevron_right</span>
+
+      <div class="state-layer"></div>
+    </a>
+  </div>
+</nav>

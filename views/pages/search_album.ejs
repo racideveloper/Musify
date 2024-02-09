@@ -1,0 +1,88 @@
+<%
+  <!-- search album -->
+  const {
+    items: searchAlbumItems
+  } = locals.searchAlbum;
+%>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  
+  <%- include('../layouts/head', { title: `Buscar - Musify` }) %>
+
+</head>
+
+<body>
+
+   <!-- Recently played -->
+   <%- include('../layouts/recent_played', {
+    recentlyPlayed: locals.recentlyPlayedTracks
+  }) %>
+
+  <article class="page custom-scrollbar" data-page>
+
+    <!-- TOP APP BAR -->
+    <%- include('../partials/top_bar', locals.currentProfile) %>
+
+    <!-- BOTTOM NAV -->
+    <%- include('../partials/bottom_nav') %>
+
+
+    <!-- SEARCH FILTER LIST -->
+    <%- include('../layouts/search_filter', { type: locals.type }) %>
+
+
+    <div class="main">
+
+      <section class="section">
+
+        <div class="grid-list">
+
+          <% searchAlbumItems.forEach(({ id, images, name: title, artists, release_date,uri }) => { %>
+
+            <%
+              const year = new Date(release_date).getFullYear();
+
+              const text = artists.map(({ name }) => name).join(', ');
+
+              const image = images.find(item => item.width === 300);
+            %>
+
+            <%- include('../partials/card', {
+              image,
+              type: 'album',
+              title,
+              text,
+              year,
+              link: `/album/${id}`,
+              uri
+            }) %>
+
+          <% }) %>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <%- include('../partials/pagination', locals.searchAlbum) %>
+
+      </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <%- include('../layouts/footer') %>
+
+    <!-- PlAYER SM -->
+    <%- include('../partials/player_sm') %>
+    
+    <!-- PLAYER LG -->
+    <%- include('../partials/player_lg') %>
+
+  </article>
+
+</body>
+
+</html>

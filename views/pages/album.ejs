@@ -1,0 +1,97 @@
+<%
+  <!-- album -->
+  const {
+    items: albumItems
+  } = locals.albums;
+%>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  
+  <%- include('../layouts/head', { title: 'Musify - Nuevos lanzamientos' }) %>
+
+  <% if (locals.isArtistAlbum) { %>
+    <style>
+      .card .card-text { text-transform: capitalize; }
+    </style>
+  <% } %>
+
+</head>
+
+<body>
+
+   <!-- Recently played -->
+   <%- include('../layouts/recent_played', {
+    recentlyPlayed: locals.recentlyPlayedTracks
+  }) %>
+
+  <article class="page custom-scrollbar" data-page>
+
+    <!-- TOP APP BAR -->
+    <%- include('../partials/top_bar', locals.currentProfile) %>
+
+    <!-- BOTTOM NAV -->
+    <%- include('../partials/bottom_nav', { currentRoute: '/album' }) %>
+
+
+    <div class="main" data-main>
+      <section class="section">
+
+        <div class="title-wrapper">
+          <h2 class="title-large section-title">Nuevos lanzamientos</h2>
+        </div>
+
+        <div class="grid-list">
+
+          <% albumItems.forEach(({ id, images, name: title, artists, release_date, album_type, uri }) => { %>
+
+            <%
+              let year, text;
+
+              if (locals.isArtistAlbum) {
+                year = new Date(release_date).getFullYear();
+                text = album_type;
+              } else {
+                text = artists.map(({ name }) => name).join(', ');
+              }
+
+              const image = images.find(item => item.width === 300);
+            %>
+
+            <%- include('../partials/card', {
+              image,
+              type: 'album',
+              title,
+              year,
+              text,
+              link: `/album/${id}`,
+              uri
+            }) %>
+
+          <% }) %>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <%- include('../partials/pagination', locals.albums) %>
+
+      </section>
+    </div>
+
+
+    <!-- FOOTER -->
+    <%- include('../layouts/footer') %>
+
+    <!-- PlAYER SM -->
+    <%- include('../partials/player_sm') %>
+    
+    <!-- PLAYER LG -->
+    <%- include('../partials/player_lg') %>
+
+  </article>
+
+</body>
+
+</html>

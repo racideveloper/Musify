@@ -1,0 +1,83 @@
+<%
+  <!-- user top artists -->
+  const {
+    items: artistItems
+  } = locals.artists;
+  
+%>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  
+  <%- include('../layouts/head', { title: `Musify - ${locals.title}` }) %>
+
+</head>
+
+<body>
+
+   <!-- Recently played -->
+   <%- include('../layouts/recent_played', {
+    recentlyPlayed: locals.recentlyPlayedTracks
+  }) %>
+
+  <article class="page custom-scrollbar" data-page>
+
+    <!-- TOP APP BAR -->
+    <%- include('../partials/top_bar', locals.currentProfile) %>
+
+    <!-- BOTTOM NAV -->
+    <%- include('../partials/bottom_nav') %>
+
+
+    <div class="main" data-main>
+      <section class="section">
+
+        <div class="title-wrapper">
+          <h2 class="title-large section-title">
+            <%=locals.title%>
+          </h2>
+        </div>
+
+        <div class="grid-list">
+
+          <% artistItems.forEach(({ name, type, images, id, uri }) => { %>
+
+              <% const [image] = images || []; %>
+
+              <%- include('../partials/card', {
+                variant: 'artist-card',
+                title: name,
+                image,
+                type: 'artist',
+                text: type,
+                link: `/artist/${id}`,
+                uri
+              }) %>
+
+          <% }) %>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <%- include('../partials/pagination', locals.artists) %>
+
+      </section>
+    </div>
+
+
+    <!-- FOOTER -->
+    <%- include('../layouts/footer') %>
+
+    <!-- PlAYER SM -->
+    <%- include('../partials/player_sm') %>
+    
+    <!-- PLAYER LG -->
+    <%- include('../partials/player_lg') %>
+
+  </article>
+
+</body>
+
+</html>

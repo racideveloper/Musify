@@ -1,0 +1,88 @@
+<%
+  <!-- search track -->
+  const {
+    items: searchTrackItems,
+    limit,
+    page
+  } = locals.searchTrack;
+%>
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  
+  <%- include('../layouts/head', { title: `Buscar - Musify` }) %>
+
+</head>
+
+<body>
+
+   <!-- Recently played -->
+   <%- include('../layouts/recent_played', {
+    recentlyPlayed: locals.recentlyPlayedTracks
+  }) %>
+
+  <article class="page custom-scrollbar" data-page>
+
+    <!-- TOP APP BAR -->
+    <%- include('../partials/top_bar', locals.currentProfile) %>
+
+    <!-- BOTTOM NAV -->
+    <%- include('../partials/bottom_nav') %>
+
+
+    <!-- SEARCH FILTER LIST -->
+    <%- include('../layouts/search_filter', { type: locals.type }) %>
+
+
+    <div class="main">
+
+      <section class="section">
+
+        <div class="list">
+
+          <% searchTrackItems.forEach(({ album: { images, name: albumName }, artists, duration_ms, id, name: title, uri: trackUri }, index) => { %>
+
+            <% 
+              const text = artists.map(({ name }) => name).join(', ');
+              index = (index + 1) + (limit * (page - 1)); 
+            %>
+
+            <%- include('../partials/list_item', {
+              title,
+              images,
+              text,
+              duration_ms,
+              id,
+              trackNumber: index,
+              albumName,
+              trackUri
+            }) %>
+
+          <% }) %>
+
+        </div>
+
+        <!-- PAGINATION -->
+        <%- include('../partials/pagination', locals.searchTrack) %>
+
+      </section>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <%- include('../layouts/footer') %>
+
+    <!-- PlAYER SM -->
+    <%- include('../partials/player_sm') %>
+    
+    <!-- PLAYER LG -->
+    <%- include('../partials/player_lg') %>
+
+  </article>
+
+</body>
+
+</html>

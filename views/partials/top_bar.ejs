@@ -1,0 +1,11 @@
+<div class="top-bar" data-top-bar>
+  <%- include('./icon_btn', { icon: 'chevron_left', variant: 'filled-tonal', dataAttr: 'data-back-btn' }) %>
+
+  <%- include('./icon_btn', { icon: 'chevron_right', variant: 'filled-tonal', dataAttr: 'data-forward-btn' }) %>
+
+  <%- include('./search_bar', {
+    display_name: locals.display_name,
+    images: locals.images,
+    query: locals.query
+  }) %>
+</div>
