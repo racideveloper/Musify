@@ -2,11 +2,11 @@
   "name": "musify",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
-    "build": "npm install"
+    "build": "tsc & tsc build"
   },
   "keywords": [],
   "author": "RCAcademy",
